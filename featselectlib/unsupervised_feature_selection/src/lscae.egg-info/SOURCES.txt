@@ -1,0 +1,10 @@
+LICENSE
+README.md
+pyproject.toml
+setup.py
+src/lscae/__init__.py
+src/lscae.egg-info/PKG-INFO
+src/lscae.egg-info/SOURCES.txt
+src/lscae.egg-info/dependency_links.txt
+src/lscae.egg-info/requires.txt
+src/lscae.egg-info/top_level.txt
