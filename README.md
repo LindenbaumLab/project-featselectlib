@@ -67,6 +67,7 @@ For more detailed examples, please refer to the example notebooks [here](https:/
 ## :mag_right: Acknowledgements and References
 If you use this code, please cite the publication:
 
+```
 @incollection{icml2020_5085,
  author = {Yamada, Yutaro and Lindenbaum, Ofir and Negahban, Sahand and Kluger, Yuval},
  booktitle = {Proceedings of Machine Learning and Systems 2020},
@@ -74,7 +75,8 @@ If you use this code, please cite the publication:
  title = {Feature Selection using Stochastic Gates},
  year = {2020}
 }
-
+```
+```
 @article{shaham2022deep,
   title={Deep unsupervised feature selection by discarding nuisance and correlated features},
   author={Shaham, Uri and Lindenbaum, Ofir and Svirsky, Jonathan and Kluger, Yuval},
@@ -82,12 +84,13 @@ If you use this code, please cite the publication:
   year={2022},
   publisher={Elsevier}
 }
-
+```
+```
 @incollection{(NeurIPS2021),
   title={Differentiable Unsupervised Feature Selection based on a Gated Laplacian},
   author={Lindenbaum, Ofir and Shaham, Uri and Peterfreund, Erez and Svirsky, Jonathan and Nicolas, Casey and Kluger, Yuval},
   year={2020}
 }
-
+```
 
 [Back to Top](#clipboard-table-of-content)

@@ -33,7 +33,7 @@ However, directly optimizing this probabilistic model is difficult due to the di
 To solve this issue, we propose a Gaussian-based continuous relaxation of the Bernoulli variables, which we term stochastic gates (STGs). These gates can be visualized as clipped Gaussian distributions. 
 
 <p align="center">
-  <img src="/docs/assets/image/Gauusian_relax_fig3.jpg" alt="Gaussian_Relaxation" width="500"/>
+  <img src="/project-featselectlib/docs/assets/image/Gauusian_relax_fig3.jpg" alt="Gaussian_Relaxation" width="500"/>
 </p>
 
 
