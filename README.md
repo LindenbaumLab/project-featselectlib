@@ -8,120 +8,86 @@ Feature selection is a critical aspect of machine learning and data analysis, en
 
 ## :clipboard: Table of Content
 
-- [Introduction to Feature Selection](#books-introduction-to-feature-selection)
-  - [Importance of Feature Selection in Machine Learning](#importance-of-feature-selection-in-machine-learning)
-  - [Categories of Feature Selection Methods](#categories-of-feature-selection-methods)
-- [Supervised Feature Selection Methods](#books-supervised-feature-selection-methods)
-  - [Overview](#overview)
-  - [Key Approaches and Algorithms](#key-approaches-and-algorithms)
-  - [Feature Selection Using Stochastic Gates](#feature-selection-using-stochastic-gates-stg)
-- [Unsupervised Feature Selection Methods](#books-unsupervised-feature-selection-methods)
-  - [Overview](#overview-1)
-  - [Key Approaches and Algorithms](#key-approaches-and-algorithms-1)
-  - [Differentiable Unsupervised Feature Selection based on a Gated Laplacian](#differentiable-unsupervised-feature-selection-based-on-a-gated-laplacian)
-  - [Deep Unsupervised Feature Selection by Discarding Nuisance and Correlated Features](#deep-unsupervised-feature-selection-by-discarding-nuisance-and-correlated-features)
-- [Interactive Examples and Notebooks](#chart_with_upwards_trend-interactive-examples-and-notebooks)
-- [Usage](#hammer-usage)
-- [Installation](#electric_plug-installation)
-- [Community Engagement](question-community-engagement)
-- [Acknowledgements and References](#mag_right-acknowledgements-and-references)
-
-## :books: Introduction to Feature Selection
-
-### Importance of Feature Selection in Machine Learning
-                                                                                                                                                                                
-Feature selection, the process of identifying the most relevant features for a given model, is
-a fundamental task in both supervised and unsupervised learning. It aims to improve model
-accuracy, reduce overfitting, and enhance computational efficiency by eliminating irrelevant
-or redundant data. Effective feature selection not only simplifies models to make them more
-understandable but also minimizes the likelihood of performance decline caused by noise or
-unnecessary information.
-
-
-
-
-### Categories of Feature Selection Methods
-
-Feature selection methods can be broadly categorized into three groups: filter methods,
-wrapper methods, and embedded methods. Each category has its own approach to
-identifying relevant features, with varying degrees of complexity and computational
-demands.
-- **Filter Methods** aim to exclude irrelevant features before model training. They achieve
-this by evaluating the importance of each feature through statistical measures and
-then making informed selections.
-- **Wrapper Methods** assess subsets of features based on the performance of a model
-built with them, require recomputing the model for each subset of features and, thus,
-become computationally expensive, especially in the context of deep neural networks.
-- **Embedded Methods** aim to learn the model while simultaneously selecting the subset
-of relevant features.
-
-[Back to Top](#clipboard-table-of-content)
-
-## :books: Supervised Feature Selection Methods                                                                                                                        
-### Overview
-
-In supervised learning, feature selection is crucial for building robust models that generalize
-well to unseen data. By focusing on the most informative features that contribute to
-predicting the output variable, supervised feature selection methods help in enhancing model
-performance and interpretability. 
-
-### Key Approaches and Algorithms
-### Feature Selection Using Stochastic Gates (STG)
-[Project Page](https://runopti.github.io/stg/)|[Paper](https://proceedings.icml.cc/static/paper_files/icml/2020/5085-Paper.pdf)
-
-Feature Selection using Stochastic Gates (STG) is a method for feature selection in neural network estimation problems. 
-The new procedure is based on probabilistic relaxation of
-the l0 norm of features, or the count of the number of selected features.
-The proposed framework simultaneously learns either a nonlinear regression or classification function while selecting a small subset of features.
-
-For a more detailed explanation [STG theory document](Theory/Feature_Selection_STG.md)
-
-[Back to Top](#clipboard-table-of-content)
-
-## :books: Unsupervised Feature Selection Methods
-
-### Overview
-
-Unsupervised feature selection aims to identify features that capture the underlying structure
-of unlabeled data, facilitating tasks such as clustering, dimensionality reduction, and manifold
-learning. Without the guidance of a target variable, these methods must rely on the data's
-intrinsic properties to determine feature relevance.
-
-### Key Approaches and Algorithms
-### Differentiable Unsupervised Feature Selection based on a Gated Laplacian
-[Paper](https://arxiv.org/pdf/2007.04728.pdf)
-
-This articale proposes a differentiable method for unsupervised feature selection, utilizing a gated
-Laplacian mechanism to enhance the selection process in the absence of labeled data.
-
-### Deep Unsupervised Feature Selection by Discarding Nuisance and Correlated Features
-[Paper](https://arxiv.org/abs/2110.05306)
-
-This article tackles the challenge of filtering out nuisance and correlated features in datasets. This work
-proposes a differentiable method for unsupervised feature selection, utilizing the Laplacian
-score criterion and an autoencoder architecture to effectively manage feature selection.
-
-[Back to Top](#clipboard-table-of-content)
+- [Feature Selection With DNN Learning Hub 🧠](#feature-selection-with-dnn-learning-hub-)
+  - [:bulb: Introduction](#bulb-introduction)
+  - [:clipboard: Table of Content](#clipboard-table-of-content)
+  - [:chart\_with\_upwards\_trend: Interactive Examples and Notebooks](#chart_with_upwards_trend-interactive-examples-and-notebooks)
+  - [:electric\_plug: Requirements:](#electric_plug-requirements)
+  - [:hammer: Usage](#hammer-usage)
+  - [:mag\_right: Acknowledgements and References](#mag_right-acknowledgements-and-references)
 
 ## :chart_with_upwards_trend: Interactive Examples and Notebooks
 
 - Jupyter Notebooks with Interactive Feature Selection Demonstrations
 
+## :electric_plug: Requirements:
 
+* torch >= 1.9
+* scikit-learn >= 0.24
+* omegaconf >= 2.0.6
+* scipy >= 1.6.0
+* matplotlib
+* numpy
+  
+  
 ## :hammer: Usage
 
-[Instructions on how to use the learning hub, including accessing tutorials, guides, and interactive examples.]
+Install the package from pypi:
+`pip install featselectlib`
 
-## :electric_plug: Installation
+Here is a brief example demonstrating how to use the featselectlib package for feature selection:
 
-[Step-by-step instructions for setting up the necessary environment to use the resources provided by the learning hub, including any required software, libraries, or datasets.]
+```python
+import featselectlib
+import torch
+from omegaconf import OmegaConf
 
-## :question: Community Engagement
+# Define Model Using STG
 
-- Discussion Forums for Knowledge Sharing and Q&A Sessions
+feature_selection = True
+model = featselectlib.STG(task_type='classification',input_dim=X_train.shape[1], output_dim=2, hidden_dims=[60, 20], activation='tanh',
+    optimizer='SGD', learning_rate=0.1, batch_size=X_train.shape[0], feature_selection=feature_selection, sigma=0.5, lam=0.5, random_state=1, device='cpu') 
+
+# Run feature selection
+   
+mu_prob,gates_prob=model.fit(X_train, y_train, nr_epochs=5000, valid_X=X_valid, valid_y=y_valid, print_interval=1000)
+
+# define you cfg parameters for lscae/cae/ls/gl models
+cfg = OmegaConf.create({"input_dim": 100})
+
+# define you dataset (Torch based)
+
+dataset = torch.utils.data.Dataset(...)
+dataloader = torch.utils.data.DataLoader(dataset, batch_size=cfg.batch_size, shuffle=True, drop_last=True)
+lscae_model, lscae_cfg = setup_model(X.shape[1], 'lscae')
+lscae.Lscae(kwargs=cfg).select_features(dataloader)
+```
+For more detailed examples, please refer to the example notebooks [here](https://github.com/yuvalaza/project-featselectlib/tree/master/notebooks)
 
 ## :mag_right: Acknowledgements and References
+If you use this code, please cite the publication:
 
-[Acknowledgements to individuals, organizations, and any references used in the creation of this learning hub.]
+@incollection{icml2020_5085,
+ author = {Yamada, Yutaro and Lindenbaum, Ofir and Negahban, Sahand and Kluger, Yuval},
+ booktitle = {Proceedings of Machine Learning and Systems 2020},
+ pages = {8952--8963},
+ title = {Feature Selection using Stochastic Gates},
+ year = {2020}
+}
+
+@article{shaham2022deep,
+  title={Deep unsupervised feature selection by discarding nuisance and correlated features},
+  author={Shaham, Uri and Lindenbaum, Ofir and Svirsky, Jonathan and Kluger, Yuval},
+  journal={Neural Networks},
+  year={2022},
+  publisher={Elsevier}
+}
+
+@incollection{(NeurIPS2021),
+  title={Differentiable Unsupervised Feature Selection based on a Gated Laplacian},
+  author={Lindenbaum, Ofir and Shaham, Uri and Peterfreund, Erez and Svirsky, Jonathan and Nicolas, Casey and Kluger, Yuval},
+  year={2020}
+}
+
 
 [Back to Top](#clipboard-table-of-content)

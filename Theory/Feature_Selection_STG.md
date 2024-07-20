@@ -20,7 +20,10 @@ In probabilistic feature selection We employ Bernoulli gates for each input feat
 
 
 
-![Probabilistic_Feature_Selection](/docs/assets/image/Prob_Feature_Selection_fig2.png)
+<p align="center">
+  <img src="/docs/assets/image/Prob_Feature_Selection_fig2.png" alt="Probabilistic_Feature_Selection" width="500"/>
+</p>
+
 
 However, directly optimizing this probabilistic model is difficult due to the discrete nature of Bernoulli variables, which can introduce high variance in the optimization process. 
 
@@ -29,14 +32,19 @@ However, directly optimizing this probabilistic model is difficult due to the di
 
 To solve this issue, we propose a Gaussian-based continuous relaxation of the Bernoulli variables, which we term stochastic gates (STGs). These gates can be visualized as clipped Gaussian distributions. 
 
-![Gaussian_Relaxation](/docs/assets/image/Gauusian_relax_fig3.jpg)
+<p align="center">
+  <img src="/docs/assets/image/Gauusian_relax_fig3.jpg" alt="Gaussian_Relaxation" width="500"/>
+</p>
+
 
 The STG is defined as z_d = max(0, min(1, µ_d + ε_d)), where ε_d is a noise term sampled from a Gaussian distribution, and µ_d is the gate's parameter which controls the probability of the gate being active. Correspondingly, the regularization term aggregates the sum of the active gate probabilities, which are calculated using the standard Gaussian cumulative distribution function (CDF), Φ.
 
 To optimize the feature selection model, we employ a Monte Carlo sampling-based gradient estimator. The gradient of the loss function concerning the gate parameters µ is combined with the regularization term's derivative to update our model parameters efficiently using Stochastic Gradient Descent (SGD).
 After training, we can remove the randomness by setting the gate values based on their mean parameters to finalize the feature selection.
 
-![STG Figure](/docs/assets/image/stg_figure1_left.png)
+<p align="center">
+  <img src="/docs/assets/image/stg_figure1_left.png" alt="STG_Figure" width="500"/>
+</p>
 
 Top: Each stochastic gate z_d is drawn from the STG approximation of the Bernoulli distribution (shown as the blue histogram on the right). Specifically, z_d is obtained by applying the hard-sigmoid function to a mean-shifted Gaussian random variable. Bottom: The z_d stochastic gate is attached to the x_d input feature, where the trainable parameter µ_d controls the probability of the gate being active
 
