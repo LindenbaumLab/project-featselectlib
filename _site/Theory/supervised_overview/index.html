@@ -1,0 +1,256 @@
+<!doctype html>
+
+
+
+
+<html
+    dir="ltr"
+    lang="en"
+    
+>
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link
+        rel="shortcut icon"
+        type="image/png"
+        
+            href="/favicon.png"
+        
+    >
+    <script defer src="https://unpkg.com/alpinejs@3.9.0/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-social@1/bin/bulma-social.min.css">
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Supervised Feature Selection | Project-Demo</title>
+<meta name="generator" content="Jekyll v3.9.5" />
+<meta property="og:title" content="Supervised Feature Selection" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/Theory/supervised_overview/" />
+<meta property="og:url" content="http://localhost:4000/Theory/supervised_overview/" />
+<meta property="og:site_name" content="Project-Demo" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Supervised Feature Selection" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","headline":"Supervised Feature Selection","url":"http://localhost:4000/Theory/supervised_overview/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- head scripts -->
+</head>
+
+    <body>
+        
+        <nav
+    class="navbar is-primary "
+    x-data="{ openNav: false }"
+>
+    <div class="container">
+        <div class="navbar-brand">
+            <a href="/" class="navbar-item">
+                Project-Demo
+            </a>
+            <a
+                role="button"
+                class="navbar-burger burger"
+                aria-label="menu"
+                aria-expanded="false"
+                data-target="navMenu"
+                :class="{ 'is-active': openNav }"
+                x-on:click="openNav = !openNav"
+            >
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu" :class="{ 'is-active': openNav }">
+            <div class="navbar-start">
+                <a href="/" class="navbar-item ">Home</a>
+                
+                    
+                        
+                            <div class="navbar-item has-dropdown is-hoverable ">
+                                <a
+                                    href="/Theory/"
+                                    class="navbar-link is-active"
+                                >Theory</a>
+                                <div class="navbar-dropdown">
+                                    
+                                        <a
+                                            href="/Theory/Feature_Selection_STG/"
+                                            class="navbar-item "
+                                        >Feature Selection Using STG</a>
+                                    
+                                        <a
+                                            href="/Theory/differentiable_unsupervised_gl/"
+                                            class="navbar-item "
+                                        >Differentiable Unsupervised Feature Selection based on a Gated Laplacian</a>
+                                    
+                                        <a
+                                            href="/Theory/discarding_nuisance_and_correlated_features/"
+                                            class="navbar-item "
+                                        >Deep Unsupervised Feature Selection by Discarding Nuisance and Correlated Features</a>
+                                    
+                                </div>
+                            </div>
+                        
+                    
+                        
+                            <div class="navbar-item has-dropdown is-hoverable ">
+                                <a
+                                    href="/Demos/"
+                                    class="navbar-link "
+                                >Demos</a>
+                                <div class="navbar-dropdown">
+                                    
+                                        <a
+                                            href="https://github.com/yuvalaza/Project-Demo/blob/main/Examples/SupervisedFeatureSelection-example.ipynb"
+                                            class="navbar-item "
+                                        >Supervised Feature Selection</a>
+                                    
+                                        <a
+                                            href="https://github.com/yuvalaza/Project-Demo/blob/main/Examples/Unsupervised_example.ipynb"
+                                            class="navbar-item "
+                                        >Unsupervised Feature Selection</a>
+                                    
+                                </div>
+                            </div>
+                        
+                    
+                        
+                            <a
+                                href="/Theory/"
+                                class="navbar-item "
+                            >Docs</a>
+                        
+                    
+                
+            </div>
+
+            <div class="navbar-end">
+                
+            </div>
+        </div>
+    </div>
+</nav>
+
+        
+            <section
+    class="hero  is-medium  is-bold is-primary"
+    
+>
+    <div class="hero-body ">
+        <div class="container">
+            <h1 class="title is-2">Supervised Feature Selection</h1>
+            <p class="subtitle is-3"></p>
+            
+        </div>
+    </div>
+</section>
+
+        
+        
+
+        <section class="section">
+            <div class="container">
+                <div class="columns is-multiline">
+                    
+                        <div class="column is-4-desktop is-4-tablet">
+                            
+
+<aside class="menu">
+    
+        <p class="menu-label">Supervised Feature Selection</p>
+        <ul class="menu-list">
+            
+                <li>
+                    <a href="/Theory/supervised_overview/" class="is-active">Overview</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="/Theory/supervised_approaches/" class="">Key Approaches and Algorithms</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="/Theory/Feature_Selection_STG/" class="">Feature Selection Using STG</a>
+                    
+                </li>
+            
+        </ul>
+    
+        <p class="menu-label">Unsupervised Feature Selection</p>
+        <ul class="menu-list">
+            
+                <li>
+                    <a href="/Theory/unsupervised_overview/" class="">Overview</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="/Theory/unsupervised_approaches/" class="">Key Approaches and Algorithms</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="/Theory/differentiable_unsupervised_gl/" class="">Differentiable Unsupervised Feature Selection based on a Gated Laplacian</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="/Theory/discarding_nuisance_and_correlated_features/" class="">Deep Unsupervised Feature Selection by Discarding Nuisance and Correlated Features</a>
+                    
+                </li>
+            
+        </ul>
+    
+</aside>
+
+                        </div>
+                    
+                    <div class="column is-8">
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+<div class="content">
+    <h1 id="overview">Overview</h1>
+
+<p>In supervised learning, feature selection is crucial for building robust models that generalize
+well to unseen data. By focusing on the most informative features that contribute to
+predicting the output variable, supervised feature selection methods help in enhancing model
+performance and interpretability.</p>
+
+</div>
+
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+        
+            <footer class="footer">
+    <div class="container">
+        
+
+        <div class="content is-small has-text-centered">
+            <p class="">Theme built by <a href="https://www.csrhymes.com">C.S. Rhymes</a></p>
+        </div>
+    </div>
+</footer>
+
+        
+        <script src="/assets/js/app.js" type="text/javascript"></script><!-- footer scripts -->
+</body>
+</html>

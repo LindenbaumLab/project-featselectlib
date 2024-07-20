@@ -1,0 +1,16 @@
+remote_theme: chrisrhymes/bulma-clean-theme@v0.14.0
+defaults:
+  - scope:
+      path: "/docs/assets/image/"
+    values:
+      image: true
+
+markdown: kramdown
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
+mathjax:
+  enable: true
+
+plugins:
+  - jekyll-jupyter-notebook

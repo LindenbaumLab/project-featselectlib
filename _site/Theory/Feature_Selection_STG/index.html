@@ -1,0 +1,280 @@
+<!doctype html>
+
+
+
+
+<html
+    dir="ltr"
+    lang="en"
+    
+>
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link
+        rel="shortcut icon"
+        type="image/png"
+        
+            href="/favicon.png"
+        
+    >
+    <script defer src="https://unpkg.com/alpinejs@3.9.0/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-social@1/bin/bulma-social.min.css">
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Feature Selection Using STG | Project-Demo</title>
+<meta name="generator" content="Jekyll v3.9.5" />
+<meta property="og:title" content="Feature Selection Using STG" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/Theory/Feature_Selection_STG/" />
+<meta property="og:url" content="http://localhost:4000/Theory/Feature_Selection_STG/" />
+<meta property="og:site_name" content="Project-Demo" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Feature Selection Using STG" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","headline":"Feature Selection Using STG","url":"http://localhost:4000/Theory/Feature_Selection_STG/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <!-- head scripts -->
+</head>
+
+    <body>
+        
+        <nav
+    class="navbar is-primary "
+    x-data="{ openNav: false }"
+>
+    <div class="container">
+        <div class="navbar-brand">
+            <a href="/" class="navbar-item">
+                Project-Demo
+            </a>
+            <a
+                role="button"
+                class="navbar-burger burger"
+                aria-label="menu"
+                aria-expanded="false"
+                data-target="navMenu"
+                :class="{ 'is-active': openNav }"
+                x-on:click="openNav = !openNav"
+            >
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu" :class="{ 'is-active': openNav }">
+            <div class="navbar-start">
+                <a href="/" class="navbar-item ">Home</a>
+                
+                    
+                        
+                            <div class="navbar-item has-dropdown is-hoverable ">
+                                <a
+                                    href="/Theory/"
+                                    class="navbar-link is-active"
+                                >Theory</a>
+                                <div class="navbar-dropdown">
+                                    
+                                        <a
+                                            href="/Theory/Feature_Selection_STG/"
+                                            class="navbar-item is-active"
+                                        >Feature Selection Using STG</a>
+                                    
+                                        <a
+                                            href="/Theory/differentiable_unsupervised_gl/"
+                                            class="navbar-item "
+                                        >Differentiable Unsupervised Feature Selection based on a Gated Laplacian</a>
+                                    
+                                        <a
+                                            href="/Theory/discarding_nuisance_and_correlated_features/"
+                                            class="navbar-item "
+                                        >Deep Unsupervised Feature Selection by Discarding Nuisance and Correlated Features</a>
+                                    
+                                </div>
+                            </div>
+                        
+                    
+                        
+                            <div class="navbar-item has-dropdown is-hoverable ">
+                                <a
+                                    href="/Demos/"
+                                    class="navbar-link "
+                                >Demos</a>
+                                <div class="navbar-dropdown">
+                                    
+                                        <a
+                                            href="https://github.com/yuvalaza/Project-Demo/blob/main/Examples/SupervisedFeatureSelection-example.ipynb"
+                                            class="navbar-item "
+                                        >Supervised Feature Selection</a>
+                                    
+                                        <a
+                                            href="https://github.com/yuvalaza/Project-Demo/blob/main/Examples/Unsupervised_example.ipynb"
+                                            class="navbar-item "
+                                        >Unsupervised Feature Selection</a>
+                                    
+                                </div>
+                            </div>
+                        
+                    
+                        
+                            <a
+                                href="/Theory/"
+                                class="navbar-item "
+                            >Docs</a>
+                        
+                    
+                
+            </div>
+
+            <div class="navbar-end">
+                
+            </div>
+        </div>
+    </div>
+</nav>
+
+        
+            <section
+    class="hero  is-medium  is-bold is-primary"
+    
+>
+    <div class="hero-body ">
+        <div class="container">
+            <h1 class="title is-2">Feature Selection Using STG</h1>
+            <p class="subtitle is-3">Y. Yamada, O. Lindenbaum, S. Negahban, Y. Kluger, ICML 2020</p>
+            
+        </div>
+    </div>
+</section>
+
+        
+        
+
+        <section class="section">
+            <div class="container">
+                <div class="columns is-multiline">
+                    
+                        <div class="column is-4-desktop is-4-tablet">
+                            
+
+<aside class="menu">
+    
+        <p class="menu-label">Supervised Feature Selection</p>
+        <ul class="menu-list">
+            
+                <li>
+                    <a href="/Theory/supervised_overview/" class="">Overview</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="/Theory/supervised_approaches/" class="">Key Approaches and Algorithms</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="/Theory/Feature_Selection_STG/" class="is-active">Feature Selection Using STG</a>
+                    
+                </li>
+            
+        </ul>
+    
+        <p class="menu-label">Unsupervised Feature Selection</p>
+        <ul class="menu-list">
+            
+                <li>
+                    <a href="/Theory/unsupervised_overview/" class="">Overview</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="/Theory/unsupervised_approaches/" class="">Key Approaches and Algorithms</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="/Theory/differentiable_unsupervised_gl/" class="">Differentiable Unsupervised Feature Selection based on a Gated Laplacian</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="/Theory/discarding_nuisance_and_correlated_features/" class="">Deep Unsupervised Feature Selection by Discarding Nuisance and Correlated Features</a>
+                    
+                </li>
+            
+        </ul>
+    
+</aside>
+
+                        </div>
+                    
+                    <div class="column is-8">
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+<div class="content">
+    <h2 id="feature-selection-using-stochastic-gates-stg">Feature Selection Using Stochastic Gates (STG)</h2>
+
+<p><a href="https://arxiv.org/abs/1810.04247">Paper</a></p>
+
+<p>Feature selection problems have been extensively
+studied in the setting of linear estimation (e.g. LASSO), but less emphasis has been placed on feature selection for non-linear functions.
+This study introduces a novel feature selection method for neural network estimation, employing a probabilistic relaxation of the 0 norm to identify key features. Our approach, utilizing a continuous approximation of the Bernoulli distribution, enables simultaneous learning of nonlinear regression or classification functions, while identifying and utilizing only a limited subset of relevant features, through gradient descent.</p>
+
+<h3 id="probabilistic-feature-selection-using-bernoulli-distribution">Probabilistic Feature Selection Using Bernoulli Distribution</h3>
+<p>In probabilistic feature selection We employ Bernoulli gates for each input feature of the neural network, which are represented by a random vector with entries that follow a Bernoulli distribution. The probability that the gate for a particular feature is active is denoted by π_d, which transforms the combinatorial problem of feature selection into an optimization problem over these probabilities.</p>
+
+<p><img src="/docs/assets/image/Prob_Feature_Selection_fig2.png" alt="Probabilistic_Feature_Selection" /></p>
+
+<p>However, directly optimizing this probabilistic model is difficult due to the discrete nature of Bernoulli variables, which can introduce high variance in the optimization process.</p>
+
+<h3 id="stochastic-gates-stg">Stochastic Gates (STG)</h3>
+
+<p>To solve this issue, we propose a Gaussian-based continuous relaxation of the Bernoulli variables, which we term stochastic gates (STGs). These gates can be visualized as clipped Gaussian distributions.</p>
+
+<p><img src="/docs/assets/image/Gauusian_relax_fig3.jpg" alt="Gaussian_Relaxation" /></p>
+
+<p>The STG is defined as z_d = max(0, min(1, µ_d + ε_d)), where ε_d is a noise term sampled from a Gaussian distribution, and µ_d is the gate’s parameter which controls the probability of the gate being active. Correspondingly, the regularization term aggregates the sum of the active gate probabilities, which are calculated using the standard Gaussian cumulative distribution function (CDF), Φ.</p>
+
+<p>To optimize the feature selection model, we employ a Monte Carlo sampling-based gradient estimator. The gradient of the loss function concerning the gate parameters µ is combined with the regularization term’s derivative to update our model parameters efficiently using Stochastic Gradient Descent (SGD).
+After training, we can remove the randomness by setting the gate values based on their mean parameters to finalize the feature selection.</p>
+
+<p><img src="/docs/assets/image/stg_figure1_left.png" alt="STG Figure" /></p>
+
+<p>Top: Each stochastic gate z_d is drawn from the STG approximation of the Bernoulli distribution (shown as the blue histogram on the right). Specifically, z_d is obtained by applying the hard-sigmoid function to a mean-shifted Gaussian random variable. Bottom: The z_d stochastic gate is attached to the x_d input feature, where the trainable parameter µ_d controls the probability of the gate being active</p>
+
+
+</div>
+
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+        
+            <footer class="footer">
+    <div class="container">
+        
+
+        <div class="content is-small has-text-centered">
+            <p class="">Theme built by <a href="https://www.csrhymes.com">C.S. Rhymes</a></p>
+        </div>
+    </div>
+</footer>
+
+        
+        <script src="/assets/js/app.js" type="text/javascript"></script><!-- footer scripts -->
+</body>
+</html>

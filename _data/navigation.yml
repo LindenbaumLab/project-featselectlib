@@ -1,0 +1,19 @@
+- name: Theory
+  link: /Theory/
+  dropdown:
+    - name: Feature Selection Using STG
+      link: /Theory/Feature_Selection_STG/
+    - name: Differentiable Unsupervised Feature Selection based on a Gated Laplacian
+      link: /Theory/differentiable_unsupervised_gl/
+    - name: Deep Unsupervised Feature Selection by Discarding Nuisance and Correlated Features
+      link: /Theory/discarding_nuisance_and_correlated_features/
+- name: Demos
+  link: /Demos/
+  dropdown:
+    - name: Supervised Feature Selection
+      link: https://github.com/yuvalaza/project-featselectlib/tree/master/notebooks/SupervisedFeatureSelection-example.ipynb
+    - name: Unsupervised Feature Selection
+      link: https://github.com/yuvalaza/project-featselectlib/tree/master/notebooks/Unsupervised_example.ipynb
+- name: Docs
+  link: /Theory/
+  
