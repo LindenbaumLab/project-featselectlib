@@ -21,7 +21,7 @@ In probabilistic feature selection We employ Bernoulli gates for each input feat
 
 
 <p align="center">
-  <img src="/docs/assets/image/Prob_Feature_Selection_fig2.png" alt="Probabilistic_Feature_Selection" width="500"/>
+  <img src="/project-featselectlib/docs/assets/image/Prob_Feature_Selection_fig2.png" alt="Probabilistic_Feature_Selection" width="700"/>
 </p>
 
 
@@ -33,7 +33,7 @@ However, directly optimizing this probabilistic model is difficult due to the di
 To solve this issue, we propose a Gaussian-based continuous relaxation of the Bernoulli variables, which we term stochastic gates (STGs). These gates can be visualized as clipped Gaussian distributions. 
 
 <p align="center">
-  <img src="/project-featselectlib/docs/assets/image/Gauusian_relax_fig3.jpg" alt="Gaussian_Relaxation" width="500"/>
+  <img src="/project-featselectlib/docs/assets/image/Gauusian_relax_fig3.jpg" alt="Gaussian_Relaxation" width="700"/>
 </p>
 
 
@@ -43,7 +43,7 @@ To optimize the feature selection model, we employ a Monte Carlo sampling-based 
 After training, we can remove the randomness by setting the gate values based on their mean parameters to finalize the feature selection.
 
 <p align="center">
-  <img src="/docs/assets/image/stg_figure1_left.png" alt="STG_Figure" width="500"/>
+  <img src="/project-featselectlib/docs/assets/image/stg_figure1_left.png" alt="STG_Figure" width="700"/>
 </p>
 
 Top: Each stochastic gate z_d is drawn from the STG approximation of the Bernoulli distribution (shown as the blue histogram on the right). Specifically, z_d is obtained by applying the hard-sigmoid function to a mean-shifted Gaussian random variable. Bottom: The z_d stochastic gate is attached to the x_d input feature, where the trainable parameter µ_d controls the probability of the gate being active
