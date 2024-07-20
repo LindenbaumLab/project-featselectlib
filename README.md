@@ -13,14 +13,15 @@ Feature selection is a critical aspect of machine learning and data analysis, en
 - [Feature Selection With DNN Learning Hub 🧠](#feature-selection-with-dnn-learning-hub-)
   - [:bulb: Introduction](#bulb-introduction)
   - [:clipboard: Table of Content](#clipboard-table-of-content)
-  - [:chart\_with\_upwards\_trend: Interactive Examples and Notebooks](#chart_with_upwards_trend-interactive-examples-and-notebooks)
+  - [:chart\_with\_upwards\_trend: Example Notebooks](#chart_with_upwards_trend-example-notebooks)
   - [:electric\_plug: Requirements:](#electric_plug-requirements)
   - [:hammer: Usage](#hammer-usage)
   - [:mag\_right: Acknowledgements and References](#mag_right-acknowledgements-and-references)
 
-## :chart_with_upwards_trend: Interactive Examples and Notebooks
+## :chart_with_upwards_trend: Example Notebooks
 
-- Jupyter Notebooks with Interactive Feature Selection Demonstrations
+- You can find jupyter Notebooks with  Feature Selection Demonstrations [here](https://github.com/yuvalaza/project-featselectlib/tree/master/notebooks)
+
 
 ## :electric_plug: Requirements:
 

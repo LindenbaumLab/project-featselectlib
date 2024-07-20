@@ -8,7 +8,7 @@ import numpy as np
 
 class GatedLaplacianModel(nn.Module):
     def __init__(self, input_dim=12, seed=1, lam=0.1, fac=2, knn=2, is_param_free_loss=True,
-                 num_epochs=100, batch_size=64, learning_rate=1e-3, verbose=True):
+                 num_epochs=100, batch_size=64, learning_rate=1e-3, verbose=True,print_interval=100):
         super(GatedLaplacianModel, self).__init__()
         torch.manual_seed(seed)
         self.input_dim = input_dim
@@ -21,6 +21,7 @@ class GatedLaplacianModel(nn.Module):
         self.batch_size = batch_size
         self.learning_rate = learning_rate
         self.verbose = verbose
+        self.print_interval=print_interval
         self.alpha = torch.nn.Parameter(0.01*torch.randn(input_dim, ), requires_grad=True)
         self.optimizer = torch.optim.SGD(self.parameters(), lr=self.learning_rate,momentum=0)
 
@@ -66,11 +67,12 @@ class GatedLaplacianModel(nn.Module):
                                    
             epoch_loss = np.mean(batch_losses)
             epoch_laplacian_score = np.mean(laplacian_scores)
-            if epoch % 10 == 0:
-                print(f"Epoch {epoch+1}/{self.num_epochs}, Loss: {epoch_loss:.4f}, "
-                f"Laplacian Score: {epoch_laplacian_score:.4f}",f"reg: {reg_gates}")
-            if epoch % 20==0 and self.verbose == True :
-                print('Selection probs: \n ', self.get_gates('prob'), '\n')
+            if self.verbose == True:
+                if epoch % self.print_interval == 0:
+                    print(f"Epoch {epoch+1}/{self.num_epochs}, Loss: {epoch_loss:.4f}, "
+                    f"Laplacian Score: {epoch_laplacian_score:.4f}",f"reg: {reg_gates}")
+                if epoch % (2*self.print_interval)==0:
+                    print('Selection probs: \n ', self.get_gates('prob'), '\n')
 
         probs = torch.tensor(self.get_gates("prob"))
         max_value = probs.max()

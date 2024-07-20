@@ -34,7 +34,8 @@ class Lscae(nn.Module):
             "rec_lambda": .5,           # Balance between reconstruction and LS terms
             "fr_penalty": 0,            # Feature redundancy penalty
             "num_epochs": 500,          # Number of training epochs
-            "verbose": True             # Whether to print to console during training
+            "verbose": True,             # Whether to print to console during training
+            "print_interval":100
         })
         self.cfg.input_dim = input_dim
         # Gated Laplacian Model parameters
@@ -179,20 +180,6 @@ class Lscae(nn.Module):
         Dis, Ids = nbrs.kneighbors(X)
         return Dis, Ids
     
-    # @staticmethod
-    # def calculate_cluster_accuracy(true_labels, cluster_labels):
-    #     max_label = max(true_labels.max(), cluster_labels.max())
-    #     size = max_label + 1
-    #     matrix = np.zeros((size, size), dtype=np.int64)
-    #     for i in range(true_labels.size):
-    #         if true_labels[i] < size and cluster_labels[i] < size:
-    #             matrix[true_labels[i], cluster_labels[i]] += 1
-    #         else:
-    #             print(f"Out of bound index at {i}: true_labels[i]={true_labels[i]}, cluster_labels[i]={cluster_labels[i]}")
-    #     row_ind, col_ind = linear_sum_assignment(matrix.max() - matrix)
-    #     return sum(matrix[row_ind, col_ind]) * 1.0 / true_labels.size
-
-
     def train_step(self, x, current_epoch):
         """
         training procedure for LS-CAE
@@ -254,12 +241,12 @@ class Lscae(nn.Module):
             epoch_loss = np.mean(batch_losses)
             epoch_ls_loss = np.mean(ls_losses)
             epoch_recon_loss = np.mean(recon_losses)
+            if self.cfg.verbose == True:
+                if epoch % self.cfg.print_interval == 0:
+                    print(f'Epoch {epoch + 1}\{self.cfg.num_epochs}, loss: {epoch_loss:.3f}, ls loss: {epoch_ls_loss:.5f}, recon loss: {epoch_recon_loss:.3f}')
 
-            if epoch % 10 == 0:
-                print(f'Epoch {epoch + 1}\{self.cfg.num_epochs}, loss: {epoch_loss:.3f}, ls loss: {epoch_ls_loss:.5f}, recon loss: {epoch_recon_loss:.3f}')
-
-            if epoch % 20 == 0 and self.cfg.verbose:
-                print('Selection probs: \n ', self.selector.get_weights(epoch).max(dim=1)[0].detach().cpu().numpy(), '\n')
+                if epoch %  (2*self.cfg.print_interval) == 0 :
+                    print('Selection probs: \n ', self.selector.get_weights(epoch).max(dim=1)[0].detach().cpu().numpy(), '\n')
 
             num_of_selected.append(len(self.get_selected_feats()))
             self.update_lr()
@@ -273,9 +260,10 @@ class Lscae(nn.Module):
         """ Learning rate updater """
         self.scheduler.step()
         lr = self.optim.param_groups[0]['lr']
-        if lr < self.cfg.min_lr:
+        if lr < self.cfg.min_lr :
             self.optim.param_groups[0]['lr'] = self.cfg.min_lr
             lr = self.optim.param_groups[0]['lr']
+        if self.cfg.verbose:
             print(f'LS-CAE learning rate = {lr:.7f}')
     pass
 

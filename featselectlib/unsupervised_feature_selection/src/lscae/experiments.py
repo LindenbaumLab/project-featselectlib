@@ -18,7 +18,7 @@ _all__ = [
     'setup_model', 'create_unsupervised_dataloaders', 'create_twomoon_dataset','correct_feats_selection'
 ]
 
-def setup_model(input_dim,num_epochs=300, model_type='lscae'): 
+def setup_model(input_dim,num_epochs=300, model_type='lscae',verbose=True,print_interval=100): 
     cfg = OmegaConf.create({
         "input_dim": input_dim,          # Dimension of input dataset (total #features)
         "k_selected": 2,            # Number of selected features
@@ -35,7 +35,8 @@ def setup_model(input_dim,num_epochs=300, model_type='lscae'):
         "min_temp": 1e-2,           # Final temperature
         "rec_lambda": .5,           # Balance between reconstruction and LS terms
         "num_epochs": num_epochs,          # Number of training epochs
-        "verbose": True             # Whether to print to console during training
+        "verbose": verbose,             # Whether to print to console during training
+        "print_interval":print_interval
     })
     model = Lscae(input_dim=cfg.input_dim, kwargs=cfg)
     return model, cfg
@@ -81,7 +82,7 @@ def create_twomoon_dataset(n=1200, d=10, noise=0.1):
     return data
 
 
-def correct_feats_selection(trials=10, max_nuisance=15, step=3, selected_model='All',device=None):
+def correct_feats_selection(trials=10, max_nuisance=15, step=3, selected_model='All',device=None,verbose=True,print_interval=100):
     device = device if device else torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Running experiments on:", device)
     
@@ -108,10 +109,10 @@ def correct_feats_selection(trials=10, max_nuisance=15, step=3, selected_model='
                         num_epochs=12000
                     model=gl.GatedLaplacianModel(input_dim=X.shape[1], seed=1, lam=0.1, fac=2, knn=5,
                                 is_param_free_loss=True, num_epochs=num_epochs, batch_size=64,
-                                learning_rate=0.01)
+                                learning_rate=0.01,verbose=verbose,print_interval=print_interval)
                     selected_features = model.select_features(loader)
                 else:
-                    model, _ = setup_model(X.shape[1],num_epochs,name)
+                    model, _ = setup_model(X.shape[1],num_epochs,name,verbose=verbose,print_interval=print_interval)
                     selected_features, _, _, _ = model.select_features(loader)
                 results[name] = set(selected_features)
 
