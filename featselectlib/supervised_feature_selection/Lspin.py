@@ -3,7 +3,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import os
-from sklearn.metrics import pairwise_distances as distance_np
 from torch.utils.data import Dataset, DataLoader
 
 def convertToOneHot(vector, num_classes=None):
@@ -107,27 +106,34 @@ class Lspin(nn.Module):
         prev_node = input_node
         for nodes in hidden_layers:
             layer = nn.Linear(prev_node, nodes)
-            nn.init.xavier_uniform_(layer.weight)
+            nn.init.trunc_normal_(layer.weight, std=stddev)
             nn.init.zeros_(layer.bias)
             layers.append(layer)
             layers.append(self.activation_gating)
             prev_node = nodes
         layer = nn.Linear(prev_node, input_node)
-        nn.init.xavier_uniform_(layer.weight)
+        nn.init.trunc_normal_(layer.weight, std=stddev)
         nn.init.zeros_(layer.bias)
         layers.append(layer)
+        # No final activation
         return nn.Sequential(*layers)
         
     def _build_prediction_net(self, input_node, hidden_layers, output_node, stddev):
         layers = []
         prev_node = input_node
         for nodes in hidden_layers:
-            layers.append(nn.Linear(prev_node, nodes))
+            layer = nn.Linear(prev_node, nodes)
+            nn.init.trunc_normal_(layer.weight, std=stddev)
+            nn.init.zeros_(layer.bias)
+            layers.append(layer)
             if self.batch_normalization:
                 layers.append(nn.BatchNorm1d(nodes))
             layers.append(self.activation_pred)
             prev_node = nodes
-        layers.append(nn.Linear(prev_node, output_node))
+        layer = nn.Linear(prev_node, output_node)
+        nn.init.trunc_normal_(layer.weight, std=stddev)
+        nn.init.zeros_(layer.bias)
+        layers.append(layer)
         return nn.Sequential(*layers)
     
     def forward(self, x, train_gates=False, compute_sim=False, Z=None):
@@ -169,8 +175,7 @@ class Lspin(nn.Module):
     def get_prob_alpha(self, X):
         with torch.no_grad():
             alpha = self.gating_net(X)
-        #return self.hard_sigmoid(alpha, self.a)
-        return np.minimum(1.0, np.maximum(0.0, alpha + 0.5)) 
+        return np.minimum(1.0, np.maximum(0.0, alpha + 0.5))
 
     def calculate_accuracy(self, preds, labels):
         return (preds.argmax(dim=1) == labels.argmax(dim=1)).float().mean().item()
@@ -184,9 +189,8 @@ class Lspin(nn.Module):
                     compute_sim=False):
         
         optimizer = torch.optim.SGD(self.parameters(), lr=lr)
-        # optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
-        criterion = nn.MSELoss() if self.output_node == 1 else nn.CrossEntropyLoss()
-        
+        criterion =  nn.MSELoss(reduction='mean') if self.output_node == 1 else nn.CrossEntropyLoss()
+       
         train_loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
         
         if self.val and valid_dataset is not None:
@@ -207,13 +211,11 @@ class Lspin(nn.Module):
                 
                 pred, alpha, reg_sim = self(batch_xs, train_gates=True, compute_sim=compute_sim, Z=batch_zs)
                 
-                if self.output_node != 1:
-                    loss = criterion(pred, batch_ys.argmax(dim=1))
-                else:
-                    loss = criterion(pred, batch_ys)
+                loss = criterion(pred.squeeze(), batch_ys.squeeze())
                 
                 if self.feature_selection:
-                    reg_gates = self.lam * torch.mean(0.5 - 0.5 * torch.erf((-1/(2*self.a) - alpha) / (self.sigma * np.sqrt(2))))
+                    reg = 0.5 - 0.5 * torch.erf((-1/(2*self.a) - alpha) / (self.sigma * np.sqrt(2)))
+                    reg_gates = self.lam * torch.mean(torch.mean(reg, dim=-1))
                     loss += reg_gates + reg_sim
                 
                 loss.backward()
@@ -236,34 +238,24 @@ class Lspin(nn.Module):
                         
                         val_pred, _, _ = self(val_xs, train_gates=False, compute_sim=compute_sim, Z=val_zs)
                         
-                        if self.output_node != 1:
-                            loss = criterion(val_pred, val_ys.argmax(dim=1))
-                            val_corrects += (val_pred.argmax(dim=1) == val_ys.argmax(dim=1)).sum().item()
-                        else:
-                            loss = criterion(val_pred, val_ys)
+                        loss = criterion(val_pred, val_ys)
                         
                         val_loss += loss.item() * val_xs.size(0)
                 
                 val_loss /= len(valid_loader.dataset)
                 val_losses.append(val_loss)
-                val_acc = val_corrects / len(valid_loader.dataset) 
+                val_acc = 1 - val_loss
                 final_val_acc = val_acc
                 
                 if (epoch + 1) % self.display_step == 0:
-                    if val_acc is not None:
-                        print(f"Epoch [{epoch+1}/{num_epoch}], Train Loss: {train_loss:.4f}, Validation Loss: {val_loss:.4f}, Validation Acc: {val_acc:.4f}")
-                    else:
-                        print(f"Epoch [{epoch+1}/{num_epoch}], Train Loss: {train_loss:.4f}, Validation Loss: {val_loss:.4f}")
+                    print(f"Epoch [{epoch+1}/{num_epoch}], Train Loss: {train_loss:.4f}, Validation Loss: {val_loss:.4f}, Validation Acc: {val_acc:.4f}")
             else:
                 if (epoch + 1) % self.display_step == 0:
                     print(f"Epoch [{epoch+1}/{num_epoch}], Train Loss: {train_loss:.4f}")
         
         print("Training complete!")
         if self.val and valid_dataset is not None:
-            if final_val_acc is not None:
-                print(f"Final Training Loss: {train_losses[-1]:.4f}, Final Validation Loss: {val_losses[-1]:.4f}, Final Validation Acc: {final_val_acc:.4f}")
-            else:
-                print(f"Final Training Loss: {train_losses[-1]:.4f}, Final Validation Loss: {val_losses[-1]:.4f}")
+            print(f"Final Training Loss: {train_losses[-1]:.4f}, Final Validation Loss: {val_losses[-1]:.4f}, Final Validation Acc: {final_val_acc:.4f}")
         else:
             print(f"Final Training Loss: {train_losses[-1]:.4f}")
         return train_losses, val_losses, final_val_acc
@@ -281,28 +273,20 @@ class Lspin(nn.Module):
         return pred.cpu().numpy(), alpha.cpu().numpy() 
 
     def evaluate(self, X, y, Z, compute_sim):
-        """
-        Get the test acc and loss
-        """
         self.eval()
-        X = torch.FloatTensor(X).to(self.device)
-        y = torch.FloatTensor(y).to(self.device)
-        Z = torch.FloatTensor(Z).to(self.device)
-        
-        criterion = nn.MSELoss() if self.output_node == 1 else nn.CrossEntropyLoss()
-        
         with torch.no_grad():
-            pred, _, reg_sim = self(X, train_gates=False, compute_sim=compute_sim, Z=Z)
+            X = torch.FloatTensor(X).to(self.device)
+            y = torch.FloatTensor(y).to(self.device)
+            Z = torch.FloatTensor(Z).to(self.device)
+            
+            pred, alpha, reg_sim = self(X, train_gates=False, compute_sim=compute_sim, Z=Z)
             
             if self.output_node != 1:
-                loss = criterion(pred, y.argmax(dim=1))
+                loss = F.cross_entropy(pred, y.argmax(dim=1))
                 acc = (pred.argmax(dim=1) == y.argmax(dim=1)).float().mean().item()
             else:
-                loss = criterion(pred, y)
-                acc = loss.item()
-            
-            print(f"test loss: {loss:.4f}, test acc: {acc:.4f}")
-            print("Saving model..")
+                loss = F.mse_loss(pred.squeeze(), y.squeeze())
+                acc = 1.0  # For regression, set accuracy to 1
             
         return acc, loss.item()
 
