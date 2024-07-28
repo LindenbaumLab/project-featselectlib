@@ -115,7 +115,7 @@ class Lspin(nn.Module):
         nn.init.trunc_normal_(layer.weight, std=stddev)
         nn.init.zeros_(layer.bias)
         layers.append(layer)
-        # No final activation
+        layers.append(self.activation_gating) 
         return nn.Sequential(*layers)
         
     def _build_prediction_net(self, input_node, hidden_layers, output_node, stddev):
@@ -130,11 +130,18 @@ class Lspin(nn.Module):
                 layers.append(nn.BatchNorm1d(nodes))
             layers.append(self.activation_pred)
             prev_node = nodes
+            
+        # Output layer
         layer = nn.Linear(prev_node, output_node)
         nn.init.trunc_normal_(layer.weight, std=stddev)
         nn.init.zeros_(layer.bias)
         layers.append(layer)
+        if self.batch_normalization:
+            layers.append(nn.BatchNorm1d(output_node))
+        if self.output_node != 1:  # Only add activation if it's not a regression task
+            layers.append(self.activation_pred)
         return nn.Sequential(*layers)
+
     
     def forward(self, x, train_gates=False, compute_sim=False, Z=None):
         if self.feature_selection:
@@ -175,7 +182,7 @@ class Lspin(nn.Module):
     def get_prob_alpha(self, X):
         with torch.no_grad():
             alpha = self.gating_net(X)
-        return np.minimum(1.0, np.maximum(0.0, alpha + 0.5))
+        return self.hard_sigmoid(alpha,self.a)
 
     def calculate_accuracy(self, preds, labels):
         return (preds.argmax(dim=1) == labels.argmax(dim=1)).float().mean().item()
@@ -236,9 +243,9 @@ class Lspin(nn.Module):
                         val_xs, val_ys, val_zs = val_batch_data
                         val_xs, val_ys, val_zs = val_xs.to(self.device), val_ys.to(self.device), val_zs.to(self.device)
                         
-                        val_pred, _, _ = self(val_xs, train_gates=False, compute_sim=compute_sim, Z=val_zs)
+                        val_pred, alpha, _ = self(val_xs, train_gates=False, compute_sim=compute_sim, Z=val_zs)
                         
-                        loss = criterion(val_pred, val_ys)
+                        loss = criterion(val_pred.squeeze(), val_ys.squeeze())
                         
                         val_loss += loss.item() * val_xs.size(0)
                 
@@ -248,14 +255,14 @@ class Lspin(nn.Module):
                 final_val_acc = val_acc
                 
                 if (epoch + 1) % self.display_step == 0:
-                    print(f"Epoch [{epoch+1}/{num_epoch}], Train Loss: {train_loss:.4f}, Validation Loss: {val_loss:.4f}, Validation Acc: {val_acc:.4f}")
+                    print(f"Epoch [{epoch+1}/{num_epoch}], Train Loss: {train_loss:.4f}, Validation Loss: {val_loss:.4f}")
             else:
                 if (epoch + 1) % self.display_step == 0:
                     print(f"Epoch [{epoch+1}/{num_epoch}], Train Loss: {train_loss:.4f}")
         
         print("Training complete!")
         if self.val and valid_dataset is not None:
-            print(f"Final Training Loss: {train_losses[-1]:.4f}, Final Validation Loss: {val_losses[-1]:.4f}, Final Validation Acc: {final_val_acc:.4f}")
+            print(f"Final Training Loss: {train_losses[-1]:.4f}, Final Validation Loss: {val_losses[-1]:.4f}")
         else:
             print(f"Final Training Loss: {train_losses[-1]:.4f}")
         return train_losses, val_losses, final_val_acc
@@ -280,12 +287,12 @@ class Lspin(nn.Module):
             Z = torch.FloatTensor(Z).to(self.device)
             
             pred, alpha, reg_sim = self(X, train_gates=False, compute_sim=compute_sim, Z=Z)
-            
+            criterion =  nn.MSELoss(reduction='mean') if self.output_node == 1 else nn.CrossEntropyLoss()
             if self.output_node != 1:
-                loss = F.cross_entropy(pred, y.argmax(dim=1))
+                loss = criterion(pred, y.argmax(dim=1))
                 acc = (pred.argmax(dim=1) == y.argmax(dim=1)).float().mean().item()
             else:
-                loss = F.mse_loss(pred.squeeze(), y.squeeze())
+                loss = criterion(pred.squeeze(), y.squeeze())
                 acc = 1.0  # For regression, set accuracy to 1
             
         return acc, loss.item()
