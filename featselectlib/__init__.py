@@ -1,4 +1,6 @@
 from .supervised_feature_selection.stg.python.stg import STG
+from .supervised_feature_selection.Lspin import Lspin,DataSetMeta
+
 
 from .unsupervised_feature_selection.src.lscae import (
     GatedLaplacianModel,

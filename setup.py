@@ -3,10 +3,10 @@ from setuptools import setup, find_packages
 setup(
     name='featselectlib',
     version='0.1',
-    description='A library combining STG and LSCAE for feature selection',
+    description='A library combining different feature selection methods',
     author='Your Name',
     author_email='your.email@example.com',
-    url='https://github.com/yourusername/featselectlib',  # Change to your repository URL
+    url='https://github.com/yourusername/featselectlib', 
     packages=find_packages(),
     install_requires=[
                     'torch',
@@ -14,7 +14,7 @@ setup(
                     'omegaconf',
                     'scipy',
                     'matplotlib'
-        # Add other dependencies if needed
+        
     ],
     classifiers=[
         'Programming Language :: Python :: 3',
