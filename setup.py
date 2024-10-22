@@ -6,7 +6,7 @@ setup(
     description='A library combining different feature selection methods',
     author='Your Name',
     author_email='your.email@example.com',
-    url='https://github.com/yourusername/featselectlib', 
+    url='https://github.com/yuvalaza/featselectlib', 
     packages=find_packages(),
     install_requires=[
                     'torch',
