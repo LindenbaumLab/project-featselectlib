@@ -7,6 +7,8 @@
       link: /Theory/differentiable_unsupervised_gl/
     - name: Deep Unsupervised Feature Selection by Discarding Nuisance and Correlated Features
       link: /Theory/discarding_nuisance_and_correlated_features/
+    - name: Locally Sparse Neural Networks for Tabular Biomedical Data
+      link: /Theory/LSPIN_overview/
 - name: Demos
   link: /Demos/
   dropdown:
