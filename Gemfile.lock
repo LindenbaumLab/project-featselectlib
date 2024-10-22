@@ -49,6 +49,7 @@ GEM
     faraday-retry (2.2.1)
       faraday (~> 2.0)
     ffi (1.17.0-x64-mingw-ucrt)
+    ffi (1.17.0-x86_64-linux-gnu)
     forwardable-extended (2.6.0)
     gemoji (4.1.0)
     github-pages (231)
@@ -236,6 +237,8 @@ GEM
       uri
     nokogiri (1.16.6-x64-mingw-ucrt)
       racc (~> 1.4)
+    nokogiri (1.16.6-x86_64-linux)
+      racc (~> 1.4)
     octokit (4.25.1)
       faraday (>= 1, < 3)
       sawyer (~> 0.9)
@@ -269,10 +272,11 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode-display_width (1.8.0)
     uri (0.13.0)
-    webrick (1.8.1)
+    webrick (1.8.2)
 
 PLATFORMS
   x64-mingw-ucrt
+  x86_64-linux
 
 DEPENDENCIES
   bulma-clean-theme
@@ -281,7 +285,7 @@ DEPENDENCIES
   github-pages
   jekyll-sass-converter
   sass (~> 3.7)
-  webrick (~> 1.7)
+  webrick (~> 1.8)
 
 BUNDLED WITH
    2.5.16
