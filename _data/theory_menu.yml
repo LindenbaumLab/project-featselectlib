@@ -6,6 +6,8 @@
       link: /Theory/supervised_approaches/
     - name: Feature Selection Using STG
       link: /Theory/Feature_Selection_STG/
+    - name: Locally Sparse Neural Networks 
+      link: /Theory/LSPIN_overview/
 
 
 - label: Unsupervised Feature Selection 
