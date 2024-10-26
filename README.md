@@ -41,9 +41,11 @@ Install the package from pypi:
 Here is a brief example demonstrating how to use the featselectlib package for feature selection:
 
 ```python
+(import...)
+
 import featselectlib
-import torch
-from omegaconf import OmegaConf
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Define Model Using STG
 
@@ -55,15 +57,37 @@ model = featselectlib.STG(task_type='classification',input_dim=X_train.shape[1],
    
 mu_prob,gates_prob=model.fit(X_train, y_train, nr_epochs=5000, valid_X=X_valid, valid_y=y_valid, print_interval=1000)
 
-# define you cfg parameters for lscae/cae/ls/gl models
+# Initialize and run the LSPIN the model
+model = featselectlib.Lspin(**model_params).to(device)
+train_losses, val_losses, val_acc = model.train_model(
+    dataset=train_dataset, 
+    valid_dataset=valid_dataset,
+    batch_size=training_params['batch_size'], 
+    num_epoch=training_params['num_epochs'], 
+    lr=training_params['lr'], 
+    compute_sim=training_params['compute_sim']
+)
+
+# you can define manually cfg parameters for lscae/cae/ls/gl models-you can see an example in the unsupervised notebook
 cfg = OmegaConf.create({"input_dim": 100})
 
 # define you dataset (Torch based)
-
 dataset = torch.utils.data.Dataset(...)
 dataloader = torch.utils.data.DataLoader(dataset, batch_size=cfg.batch_size, shuffle=True, drop_last=True)
-lscae_model, lscae_cfg = setup_model(X.shape[1], 'lscae')
-lscae.Lscae(kwargs=cfg).select_features(dataloader)
+
+model_gl=featselectlib.GatedLaplacianModel(input_dim=X.shape[1], seed=1, lam=0.1, fac=2, knn=5,
+                                is_param_free_loss=True, num_epochs=2500, batch_size=64,
+                                learning_rate=0.01,verbose=True,print_interval=500)
+selected_features = model_gl.select_features(dataloader)
+
+lscae_model, lscae_cfg =featselectlib.setup_model(X.shape[1], 'lscae',verbose=True,print_interval=50)
+selected_features_lscae = lscae_model.select_features(dataloader)
+
+cae_model, cae_cfg = featselectlib.setup_model(X.shape[1], 'cae',verbose=True,print_interval=50)
+selected_features_cae = cae_model.select_features(dataloader)
+
+ls_model, ls_cfg = featselectlib.setup_model(X.shape[1], 'cae',verbose=True,print_interval=50)
+selected_features_cae = ls_model.select_features(dataloader)
 ```
 For more detailed examples, please refer to the example notebooks [here](https://github.com/yuvalaza/project-featselectlib/tree/master/notebooks)
 
