@@ -69,7 +69,7 @@ train_losses, val_losses, val_acc = model.train_model(
 )
 
 # you can define manually cfg parameters for lscae/cae/ls/gl models-you can see an example in the unsupervised notebook
-cfg = OmegaConf.create({"input_dim": 100})
+cfg = OmegaConf.create({"input_dim": X.shape[1],"model_type":'lscae'})
 
 # define you dataset (Torch based)
 dataset = torch.utils.data.Dataset(...)
@@ -80,13 +80,13 @@ model_gl=featselectlib.GatedLaplacianModel(input_dim=X.shape[1], seed=1, lam=0.1
                                 learning_rate=0.01,verbose=True,print_interval=500)
 selected_features = model_gl.select_features(dataloader)
 
-lscae_model, lscae_cfg =featselectlib.setup_model(X.shape[1], 'lscae',verbose=True,print_interval=50)
+lscae_model, lscae_cfg =featselectlib.Lscae(kwargs=cfg)
 selected_features_lscae = lscae_model.select_features(dataloader)
 
-cae_model, cae_cfg = featselectlib.setup_model(X.shape[1], 'cae',verbose=True,print_interval=50)
+cae_model, cae_cfg = featselectlib.Lscae(kwargs=cfg)
 selected_features_cae = cae_model.select_features(dataloader)
 
-ls_model, ls_cfg = featselectlib.setup_model(X.shape[1], 'cae',verbose=True,print_interval=50)
+ls_model, ls_cfg =featselectlib.Lscae(kwargs=cfg)
 selected_features_cae = ls_model.select_features(dataloader)
 ```
 For more detailed examples, please refer to the example notebooks [here](https://github.com/yuvalaza/project-featselectlib/tree/master/notebooks)
