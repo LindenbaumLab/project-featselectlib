@@ -14,7 +14,7 @@ from torch.optim import lr_scheduler
 
 
 class Lscae(nn.Module):
-    def __init__(self, input_dim: int = None, device=None, **kwargs):
+    def __init__(self, input_dim: int = None,model_type='lscae', device=None, **kwargs):
         super().__init__()
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") if device is None else device
         self.cfg = OmegaConf.create({
@@ -26,7 +26,7 @@ class Lscae(nn.Module):
             "weight_decay": 0,          # l2 weight penalty
             "batch_size": 64,           # Minibatch size
             "hidden_dim": 128,          # Hidden layers size
-            "model": 'lscae',              # lscae | cae | ls | gated_laplacian
+            "model": model_type,              # lscae | cae | ls | gated_laplacian
             "scale_k": 2,               # Number of neighbors for computation of local scales for the kernel
             "laplacian_k": 50,          # Number of neighbors of each pooint, used for computation of the Laplacian
             "start_temp": 10,           # Initial temperature
