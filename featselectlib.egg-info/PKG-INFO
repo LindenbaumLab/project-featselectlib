@@ -1,3 +1,16 @@
+Metadata-Version: 2.1
+Name: featselectlib
+Version: 0.1.0
+Summary: A library combining different feature selection methods
+Home-page: https://github.com/LindenbaumLab/project-featselectlib
+Author: LindenbaumLab
+Author-email: your.email@example.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+
 # Feature Selection With DNN Learning Hub 🧠
 
 Welcome to the Feature Selection Learning Hub! This platform is dedicated to providing comprehensive resources and tutorials on feature selection techniques, based on the research articles from Dr. Ofir Lindenbaum's [research lab](https://www.eng.biu.ac.il/lindeno/). Whether you're new to feature selection or looking to deepen your understanding, this hub is designed to support your learning journey.
@@ -6,12 +19,7 @@ Welcome to the Feature Selection Learning Hub! This platform is dedicated to pro
 
 ## :bulb: Introduction
 
-The `featselectlib` package is a comprehensive Python library that unifies state-of-the-art feature selection methods from Dr. Ofir Lindenbaum's lab research. This library implements several advanced deep learning-based feature selection approaches:
-
-- **STG (Stochastic Gates)** [[paper]](https://arxiv.org/pdf/1810.04247)
-- **LSPIN (Locally Sparse Neural Networks)** [[paper]](https://arxiv.org/pdf/2106.06468)
-- **DUFS (Differentiable Unsupervised Feature Selection)** [[paper]](https://arxiv.org/pdf/2007.04728)
-- **LS-CAE (Laplacian Score-regularized Concrete Autoencoder)** [[paper]](https://arxiv.org/pdf/2110.05306)
+Feature selection is a critical aspect of machine learning and data analysis, enabling the identification of relevant features that contribute most to model performance. The research articles produced by Dr. Ofir Lindenbaum's lab offer innovative approaches and methodologies for feature selection, spanning both supervised and unsupervised learning domains. This learning hub serves as a central repository for exploring and implementing these techniques, as well as examining known approaches and algorithms, enriching the understanding of the feature selection field.
 
 ## :clipboard: Table of Content
 

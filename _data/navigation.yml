@@ -13,11 +13,11 @@
   link: /Demos/
   dropdown:
     - name: Supervised Feature Selection
-      link: https://github.com/yuvalaza/project-featselectlib/tree/master/notebooks/SupervisedFeatureSelection-example.ipynb
+      link: https://github.com/LindenbaumLab/project-featselectlib/blob/master/notebooks/SupervisedFeatureSelection-example.ipynb
     - name: Unsupervised Feature Selection
-      link: https://github.com/yuvalaza/project-featselectlib/tree/master/notebooks/Unsupervised_example.ipynb
+      link: https://github.com/LindenbaumLab/project-featselectlib/blob/master/notebooks/Unsupervised_example.ipynb
     - name: LSPIN Demo
-      link: https://github.com/yuvalaza/project-featselectlib/tree/master/notebooks/lspinDemo.ipynb
+      link: https://github.com/LindenbaumLab/project-featselectlib/blob/master/notebooks/lspinDemo.ipynb
 - name: Docs
-  link: /Theory/
+  link: https://github.com/LindenbaumLab/project-featselectlib
   
