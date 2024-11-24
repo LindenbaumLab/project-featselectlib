@@ -2,7 +2,7 @@
 
 Welcome to the Feature Selection Learning Hub! This platform is dedicated to providing comprehensive resources and tutorials on feature selection techniques, based on the research articles from Dr. Ofir Lindenbaum's [research lab](https://www.eng.biu.ac.il/lindeno/). Whether you're new to feature selection or looking to deepen your understanding, this hub is designed to support your learning journey.
 
-[Project Page](https://yuvalaza.github.io/project-featselectlib/)
+[Project Page](https://lindenbaumlab.github.io/project-featselectlib/)
 
 ## :bulb: Introduction
 
