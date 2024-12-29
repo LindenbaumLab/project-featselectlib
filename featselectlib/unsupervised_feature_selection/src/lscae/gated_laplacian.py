@@ -101,7 +101,6 @@ class GatedLaplacianModel(nn.Module):
         Dx = self.squared_distance_pt(X)
         # Get the distances of the k-nearest neighbors directly
         sorted_distances, indices = torch.sort(Dx, dim=1)
-        # You should select the k-th nearest, not -Dx as it was wrongly mentioned
         knn_distances = sorted_distances[:, knn-1]
         mu, ml = self.calculate_percentiles(knn_distances)
         sigma = (mu + ml) / 2.
